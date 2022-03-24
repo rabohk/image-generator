@@ -1,4 +1,5 @@
 var express = require('express');
+var path = require('path');
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 var router = express.Router();
@@ -12,6 +13,7 @@ router.get('/', function(req, res, next) {
 
 async function generateImage(params) {
   try {
+    console.log("generating image for " + params.ssrId);
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setViewport({ width: 500, height: 500 });
@@ -37,10 +39,16 @@ router.post("/getImageUrlFromHtml", (req, res) => {
     res.sendStatus(400);
     return;
   }
+  console.log("got " + JSON.stringify(params.ssrId));
   generateImage(params);
   var fullUrl = req.protocol + "://" + req.get("host");
-  var path = `${fullUrl}/images/${params.ssrId}.jpeg`;
+  var path = `${fullUrl}/image/${params.ssrId}.jpeg`;
   res.json({ ssrId: params.ssrId, imageUrl: path });
+});
+
+router.get("/image/:id", (req, res, next) => {
+  res.set('Cache-Control', 'max-age=1000000');
+  res.sendFile(path.join(__dirname, `../public/images/${req.params.id}`));
 });
 
 module.exports = router;

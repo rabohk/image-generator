@@ -1,0 +1,4 @@
+{
+	"appService.defaultWebAppToDeploy": "/subscriptions/b2d5754e-dd4d-44cb-b10d-dd9274f3b1b3/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/ImageGenerator",
+	"appService.deploySubpath": "."
+}
