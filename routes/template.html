@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Instant OneNote</title>
+
+    <link
+      rel="stylesheet"
+      href="https://c5h-onenote-15.cdn.office.net/o/s/h89E6A4D5610A76B3_resources/1033/OneNote.Refresh.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://c5h-onenote-15.cdn.office.net/o/s/h816A0F42A2BF4732_resources/1033/EditSurface.css"
+    />
+    <style>
+      * {
+        -moz-user-select: text;
+        -webkit-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+      }
+    </style>
+  </head>
+  <body onresize="resizeHandler()">
+    <div id="htmlContent"><%-HTML_CONTENT%></div>
+    <script>
+      //----------------------------init--------------------------------------
+      var _outlineContainerWidth =
+        document.getElementsByClassName("OutlineContent")[0].style.width;
+      //-------------------------------------------------------------------------
+
+      function resizeHandler() {
+        var padding24 = 24;
+        var windowWidth =
+          window.innerWidth > 0 ? window.innerWidth : screen.width;
+        var widthPx = `${windowWidth - 2 * padding24}px`;
+        document.getElementsByClassName("PageContentContainer")[0].style.width =
+          widthPx;
+        document.getElementsByClassName("OutlineContainer")[0].style.width =
+          widthPx;
+        document.getElementsByClassName("Title")[0].style.width = widthPx;
+        document.getElementsByClassName("Outline")[0].style.minWidth = widthPx;
+        document.getElementsByClassName(
+          "PageContentOrigin"
+        )[0].style.left = `-${padding24}px`;
+        document.getElementsByClassName(
+          "OutlineContent"
+        )[0].style.marginTop = `${padding24}px`;
+        if (windowWidth < parseInt(_outlineContainerWidth)) {
+          document.getElementsByClassName("OutlineContent")[0].style.width =
+            widthPx;
+        } else {
+          document.getElementsByClassName("OutlineContent")[0].style.width =
+            _outlineContainerWidth;
+        }
+      }
+
+      resizeHandler();
+    </script>
+  </body>
+</html>
